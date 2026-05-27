@@ -93,22 +93,79 @@
             z-index: 2;
             left: 50%;
             top: 45%;
-            width: min(44vw, 520px);
+            width: min(34vw, 360px);
             transform: translate(-50%, -50%);
             display: grid;
             justify-items: center;
-            gap: 10px;
+            gap: 12px;
             pointer-events: none;
             text-align: center;
             filter: drop-shadow(0 0 26px color-mix(in srgb, var(--accent) 44%, transparent));
         }
 
-        .demo-brand-name {
+        .demo-orb-avatar {
+            position: relative;
+            width: clamp(180px, 24vw, 300px);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.95) 0 2.2%, rgba(5,5,5,0.96) 2.6% 7%, transparent 7.5%),
+                repeating-radial-gradient(circle, transparent 0 18px, rgba(246,239,255,0.10) 19px 20px),
+                radial-gradient(circle at 46% 42%, color-mix(in srgb, var(--accent-strong) 48%, transparent), transparent 18%),
+                radial-gradient(circle, rgba(246,239,255,0.18), color-mix(in srgb, var(--accent) 26%, transparent) 36%, transparent 68%);
+            border: 1px solid color-mix(in srgb, var(--accent-strong) 46%, transparent);
+            box-shadow:
+                inset 0 0 26px rgba(255,255,255,0.08),
+                inset 0 0 76px color-mix(in srgb, var(--accent) 24%, transparent),
+                0 0 48px color-mix(in srgb, var(--accent-strong) 34%, transparent);
+            overflow: hidden;
+            animation: jarvisOrbBreathe 3.8s ease-in-out infinite;
+        }
+
+        .demo-orb-avatar::before,
+        .demo-orb-avatar::after {
+            content: "";
+            position: absolute;
+            inset: 9%;
+            border-radius: 50%;
+            border: 1px solid color-mix(in srgb, var(--accent-strong) 34%, transparent);
+        }
+
+        .demo-orb-avatar::before {
+            background:
+                conic-gradient(from 0deg, transparent 0 13%, color-mix(in srgb, var(--accent-strong) 72%, transparent) 14% 18%, transparent 19% 42%, rgba(255,255,255,0.28) 43% 45%, transparent 46% 100%);
+            mask: radial-gradient(circle, transparent 0 32%, #000 33% 56%, transparent 57%);
+            animation: jarvisOrbSpin 8s linear infinite;
+        }
+
+        .demo-orb-avatar::after {
+            inset: 19%;
+            background:
+                radial-gradient(circle, rgba(246,239,255,0.82) 0 4%, rgba(5,5,5,0.92) 5% 14%, transparent 15%),
+                conic-gradient(from 180deg, transparent, color-mix(in srgb, var(--accent) 42%, transparent), transparent 52%);
+            box-shadow:
+                inset 0 0 18px rgba(255,255,255,0.10),
+                0 0 22px color-mix(in srgb, var(--accent-strong) 28%, transparent);
+            animation: jarvisOrbSpin 13s linear infinite reverse;
+        }
+
+        .demo-orb-core {
+            position: absolute;
+            inset: 39%;
+            border-radius: 50%;
+            background: rgba(7, 5, 10, 0.96);
+            border: 1px solid rgba(246,239,255,0.22);
+            box-shadow:
+                0 0 18px rgba(246,239,255,0.34),
+                0 0 36px color-mix(in srgb, var(--accent-strong) 42%, transparent);
+        }
+
+        .demo-brand-label {
             font-family: var(--font-main);
-            font-size: clamp(3.1rem, 7vw, 7.2rem);
-            font-weight: 900;
-            letter-spacing: 0.08em;
-            color: rgba(246, 239, 255, 0.94);
+            font-size: clamp(0.82rem, 1.4vw, 1.1rem);
+            font-weight: 800;
+            letter-spacing: 0.26em;
+            color: rgba(246, 239, 255, 0.86);
             text-shadow:
                 0 0 18px color-mix(in srgb, var(--accent-strong) 78%, transparent),
                 0 0 56px color-mix(in srgb, var(--accent) 38%, transparent);
@@ -137,7 +194,7 @@
         }
 
         body.three-ready .demo-core-brand {
-            opacity: 0.64;
+            opacity: 0.88;
         }
 
         body.three-fallback #canvas-container::before {
@@ -159,6 +216,15 @@
 
         @keyframes fallbackCoreSpin {
             to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes jarvisOrbSpin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes jarvisOrbBreathe {
+            0%, 100% { transform: scale(0.985); filter: saturate(1); }
+            50% { transform: scale(1.025); filter: saturate(1.18); }
         }
 
         .widget {
@@ -2023,7 +2089,10 @@
     <div id="theme-sweep" aria-hidden="true"></div>
     <div id="canvas-container"></div>
     <div class="demo-core-brand" aria-label="Jarvis OS demo">
-        <div class="demo-brand-name">JARVIS</div>
+        <div class="demo-orb-avatar" aria-hidden="true">
+            <div class="demo-orb-core"></div>
+        </div>
+        <div class="demo-brand-label">JARVIS</div>
         <div class="demo-brand-status">Demo statica pubblica</div>
     </div>
 
